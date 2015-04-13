@@ -9,7 +9,6 @@ Lightweight utility to proxy api requests from main thread to web worker.
 // echo.js
 define(function(require, exports) {
 'use strict';
-
 let ProxyWorker = require('proxyworker').ProxyWorker;
 
 let worker = new ProxyWorker(new Worker('./path/to/echo_worker.js'));
