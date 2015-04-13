@@ -3,6 +3,8 @@ proxyworker
 
 Lightweight utility to proxy api requests from main thread to web worker.
 
+### Usage
+
 ```js
 // echo.js
 define(function(require, exports) {
