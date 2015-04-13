@@ -1,6 +1,6 @@
 {
   "name": "proxyworker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Gareth Aye <gaye@mozilla.com>",
   "description": "Simple wrapper for proxying api requests from mt to worker",
   "license": "MPL-2.0",
