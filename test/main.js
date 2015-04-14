@@ -7,10 +7,13 @@ require.config({
   }
 });
 
-require(['chai', 'chai-as-promised'], (chai, chaiAsPromised) => {
+require(['chai', 'chai-as-promised'], function(chai, chaiAsPromised) {
   chai.use(chaiAsPromised);
 
-  require([
-    'test/proxyworker_test'
-  ], () => mocha.run());
+  require(
+    ['test/proxyworker_test'],
+    function() {
+      mocha.run();
+    }
+  );
 });

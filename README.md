@@ -13,12 +13,13 @@ let ProxyWorker = require('proxyworker').ProxyWorker;
 
 let worker = new ProxyWorker(new Worker('./path/to/echo_worker.js'));
 
-/**
- * Send arguments from main thread to worker and back.
- */
-exports.echo = function() {
-  return worker.callWithArgs('echo', Array.slice(arguments));
-};
+// Send arguments from main thread to worker and back.
+worker.callWithArgs('echo', Array.slice(arguments));
+
+// Subscribe to worker event.
+worker.subscribe('breakfast', breakfastEvent => {
+  // ...
+});
 
 });
 
@@ -28,10 +29,16 @@ define(function(require) {
 let proxy = require('proxyworker').proxy;
 
 proxy({
-  echo: function() {
-    let result = Array.prototype.slice.call(arguments);
-    return Promise.resolve(result);
-  }
+  methods: {
+    echo: function() {
+      let result = Array.prototype.slice.call(arguments);
+      return Promise.resolve(result);
+    }
+  },
+
+  events: [
+    'breakfast'
+  ]
 });
 
 });
