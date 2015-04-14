@@ -13,8 +13,9 @@ let ProxyWorker = require('proxyworker').ProxyWorker;
 
 let worker = new ProxyWorker(new Worker('./path/to/echo_worker.js'));
 
-// Send arguments from main thread to worker and back.
-worker.callWithArgs('echo', Array.slice(arguments));
+// Call 'echo' method on worker with some arguments.
+// This returns a promise that will resolve with the worker api response.
+worker.callWithArgs('echo', ['a', 'b', 'c', 1, 2, 3]);
 
 // Subscribe to worker event.
 worker.subscribe('breakfast', breakfast => {
