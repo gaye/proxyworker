@@ -6,7 +6,6 @@ require(['../proxyworker'], function(proxyworker) {
 var emit = proxyworker.emit;
 var proxy = proxyworker.proxy;
 
-
 proxy({
   methods: {
     echo: function() {
