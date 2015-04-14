@@ -26,6 +26,7 @@ worker.subscribe('breakfast', breakfastEvent => {
 // echo_worker.js
 define(function(require) {
 'use strict';
+let emit = require('proxyworker').emit;
 let proxy = require('proxyworker').proxy;
 
 proxy({
@@ -40,6 +41,14 @@ proxy({
     'breakfast'
   ]
 });
+
+// Time for breakfast?
+emit('breakfast', [
+  'green',
+  'eggs',
+  'and',
+  'tofu'
+]);
 
 });
 ```
