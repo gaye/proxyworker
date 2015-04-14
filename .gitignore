@@ -1,5 +1,3 @@
 *.log
 
-/proxyworker.js
-/proxyworker.js.map
 /node_modules
