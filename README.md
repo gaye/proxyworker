@@ -17,8 +17,8 @@ let worker = new ProxyWorker(new Worker('./path/to/echo_worker.js'));
 worker.callWithArgs('echo', Array.slice(arguments));
 
 // Subscribe to worker event.
-worker.subscribe('breakfast', breakfastEvent => {
-  // ...
+worker.subscribe('breakfast', breakfast => {
+  // breakfast => ['green', 'eggs', 'and', 'tofu']
 });
 
 });
@@ -43,12 +43,14 @@ proxy({
 });
 
 // Time for breakfast?
-emit('breakfast', [
-  'green',
-  'eggs',
-  'and',
-  'tofu'
-]);
+setInterval(function() {
+  emit('breakfast', [
+    'green',
+    'eggs',
+    'and',
+    'tofu'
+  ]);
+}, 24 * 60 * 60 * 1000);
 
 });
 ```
