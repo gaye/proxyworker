@@ -2,8 +2,8 @@ require.config({
   baseUrl: '../',
 
   paths: {
-    'chai': '/node_modules/chai/chai',
-    'chai-as-promised': '/node_modules/chai-as-promised/lib/chai-as-promised'
+    'chai': 'node_modules/chai/chai',
+    'chai-as-promised': 'node_modules/chai-as-promised/lib/chai-as-promised'
   },
 
   shim: {
