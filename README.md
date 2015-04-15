@@ -1,7 +1,14 @@
 proxyworker
 ===========
 
-Lightweight utility to proxy api requests from main thread to web worker.
+Lightweight utility to proxy api requests from main thread to web worker. Assumes platform support for a number of es6 features like:
+
++ arrow functions
++ generators
++ promises
++ template strings
+
+Check out the test suite [here](http://gaye.github.io/proxyworker/test/).
 
 ### Usage
 
