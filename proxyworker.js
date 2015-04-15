@@ -6,6 +6,7 @@ exports.emit = proxy.emit;
 exports.proxy = proxy.proxy;
 
 },{"./proxy":2,"./proxyworker":3}],2:[function(require,module,exports){
+'use strict';
 var co = require('co');
 
 var api;
@@ -32,7 +33,7 @@ exports.proxy = function(_api) {
         return sendError(messageId, `Unknown message type ${messageType}`);
     }
   });
-}
+};
 
 exports.emit = function(eventType, args) {
   if (subscriptions.indexOf(eventType) === -1) {
@@ -48,7 +49,7 @@ exports.emit = function(eventType, args) {
 
   console.log(`Send event to main thread ${JSON.stringify(message)}`);
   self.postMessage(message);
-}
+};
 
 function handleRPC(data) {
   var messageId = data.messageId;
@@ -233,7 +234,7 @@ ProxyWorker.prototype = {
       });
     });
   }
-}
+};
 
 function waitForResponse(worker, messageId) {
   return new Promise((accept, reject) => {
