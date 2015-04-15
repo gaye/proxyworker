@@ -1,15 +1,9 @@
 JS := $(shell find lib/ -name "*.js")
 
-proxyworker.js: build
+proxyworker.js: $(JS) node_modules
 	./node_modules/.bin/browserify \
 		--standalone proxyworker \
-		./build/index.js > ./proxyworker.js
-
-build: $(JS) clean node_modules
-	./node_modules/.bin/babel lib \
-		--modules common \
-		--out-dir build \
-		--stage 0
+		./lib/index.js > ./proxyworker.js
 
 node_modules: package.json
 	npm install

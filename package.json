@@ -1,17 +1,18 @@
 {
   "name": "proxyworker",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": "Gareth Aye <gaye@mozilla.com>",
   "description": "Simple wrapper for proxying api requests from mt to worker",
   "license": "MPL-2.0",
 
+  "dependencies": {
+    "co": "4.5.1"
+  },
+
   "devDependencies": {
-    "babel": "5.0.x",
     "browserify": "9.0.8",
     "chai": "2.2.0",
     "chai-as-promised": "4.3.0",
-    "mocha": "2.2.4",
-    "regenerator": "0.8.21",
     "requirejs": "2.1.17"
   },
 

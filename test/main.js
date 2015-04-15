@@ -4,6 +4,12 @@ require.config({
   paths: {
     'chai': '/node_modules/chai/chai',
     'chai-as-promised': '/node_modules/chai-as-promised/lib/chai-as-promised'
+  },
+
+  shim: {
+    'proxyworker': {
+      exports: 'proxyworker'
+    }
   }
 });
 

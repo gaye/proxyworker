@@ -1,7 +1,7 @@
 define(function(require) {
 'use strict';
 
-var ProxyWorker = require('../proxyworker').ProxyWorker;
+var ProxyWorker = require('proxyworker').ProxyWorker;
 var expect = require('chai').expect;
 
 var worker = new ProxyWorker(new Worker('./echo_worker.js'));
