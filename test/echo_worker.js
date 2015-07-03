@@ -9,11 +9,11 @@ var proxy = proxyworker.proxy;
 proxy({
   methods: {
     echo: function() {
-      return Array.slice(arguments);
+      return Array.prototype.slice.call(arguments);
     },
 
     echoWithPromise: function() {
-      return Promise.resolve(Array.slice(arguments));
+      return Promise.resolve(Array.prototype.slice.call(arguments));
     },
 
     reject: function() {
