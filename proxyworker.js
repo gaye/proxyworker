@@ -17,7 +17,7 @@ exports.proxy = function(_api) {
     var data = message.data;
     var messageType = data.messageType;
     var messageId = data.messageId;
-    console.log('Worker received message', messageType, messageId);
+    //console.log('Worker received message', messageType, messageId);
 
     switch (messageType) {
       case 'connect':
@@ -36,7 +36,7 @@ exports.proxy = function(_api) {
 
 exports.emit = function(eventType, args) {
   if (subscriptions.indexOf(eventType) === -1) {
-    console.log('No one is subscribed to', eventType);
+    //console.log('No one is subscribed to', eventType);
     return;
   }
 
@@ -46,7 +46,7 @@ exports.emit = function(eventType, args) {
     args: args
   };
 
-  console.log('Send event to main thread', JSON.stringify(message));
+  //console.log('Send event to main thread', JSON.stringify(message));
   self.postMessage(message);
 };
 
@@ -58,7 +58,7 @@ function handleRPC(data) {
     return sendError(messageId, method + ' not implemented by worker');
   }
 
-  console.log('Call worker method', method);
+  //console.log('Call worker method', method);
   var args = data.args;
   var result;
   try {
@@ -81,7 +81,7 @@ function handleSubscription(data) {
   var messageId = data.messageId;
   var eventType = data.eventType;
 
-  console.log('Process subscription to', eventType);
+  //console.log('Process subscription to', eventType);
   if (!Array.isArray(api.events) || api.events.indexOf(eventType) === -1) {
     return sendError(messageId, eventType + ' not registered by worker');
   }
@@ -102,7 +102,7 @@ function sendResponse(messageId, response) {
     response: response
   };
 
-  console.log('Send response to main thread', JSON.stringify(message));
+  //console.log('Send response to main thread', JSON.stringify(message));
   self.postMessage(message);
 }
 
@@ -113,7 +113,7 @@ function sendError(messageId, errorMessage) {
     errorMessage: errorMessage
   };
 
-  console.log('Send error to main thread', JSON.stringify(message));
+  //console.log('Send error to main thread', JSON.stringify(message));
   self.postMessage(message);
 }
 
@@ -205,7 +205,7 @@ ProxyWorker.prototype = {
       var messageId = this.nextMessageId++;
 
       message.messageId = messageId;
-      console.log('Send message to worker', JSON.stringify(message));
+      //console.log('Send message to worker', JSON.stringify(message));
       worker.postMessage(message);
       return waitForResponse(worker, messageId);
     }.bind(this));
@@ -217,7 +217,7 @@ ProxyWorker.prototype = {
 
     function pollWorker() {
       var message = { messageType: 'connect' };
-      console.log('Send message to worker', JSON.stringify(message));
+      //console.log('Send message to worker', JSON.stringify(message));
       worker.postMessage(message);
       timeout = setTimeout(pollWorker, 50);
     }
