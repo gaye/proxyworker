@@ -127,7 +127,7 @@ function isPromise(maybePromise) {
       return false;
   }
 
-  return typeof maybePromise.then === 'function';
+  return !!maybePromise && typeof maybePromise.then === 'function';
 }
 
 },{}],3:[function(require,module,exports){
