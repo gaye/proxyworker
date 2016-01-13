@@ -63,7 +63,11 @@ function handleRPC(data) {
   var result;
   try {
     result = api.methods[method].apply(null, args);
-    result = isPromise(result) ? result : Promise.resolve(result);
+    if (!isPromise(result)) {
+      sendResponse(messageId, result);
+      return;
+    }
+
     return result
     .then(function(value) {
       sendResponse(messageId, value);
@@ -232,7 +236,10 @@ ProxyWorker.prototype = {
           return;
         }
 
-        worker.removeEventListener('message', onmessage);
+        if (typeof worker.removeEventListener === 'function') {
+          worker.removeEventListener('message', onmessage);
+        }
+
         clearTimeout(timeout);
         accept();
       });
@@ -250,7 +257,9 @@ function waitForResponse(worker, messageId) {
       }
 
       // Stop listening for our response since we've already received it.
-      worker.removeEventListener('message', onmessage);
+      if (typeof worker.removeEventListener === 'function') {
+        worker.removeEventListener('message', onmessage);
+      }
 
       if (data.errorMessage) return reject(new Error(data.errorMessage));
       accept(data.response);
