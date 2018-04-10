@@ -1,18 +1,16 @@
 {
   "name": "proxyworker",
-  "version": "1.4.0",
-  "author": "Gareth Aye <gaye@mozilla.com>",
+  "version": "2.0.0",
+  "author": "Gareth (Ari) Aye <gareth.aye@gmail.com>",
   "description": "Simple wrapper for proxying api requests from mt to worker",
   "license": "MPL-2.0",
   "main": "proxyworker.js",
-
   "devDependencies": {
     "browserify": "9.0.8",
     "chai": "2.2.0",
     "chai-as-promised": "4.3.0",
     "requirejs": "2.1.17"
   },
-
   "repository": {
     "type": "git",
     "url": "https://github.com/gaye/proxyworker"
