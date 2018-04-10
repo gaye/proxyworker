@@ -29,7 +29,7 @@ exports.proxy = function(_api) {
       case 'unsubscribe':
         return handleSubscription(data);
       default:
-        return sendError(messageId, 'Unknown message type ' + messageType);
+        return sendError(messageId, new Error('Unknown message type ' + messageType));
     }
   });
 };
@@ -55,7 +55,7 @@ function handleRPC(data) {
   var method = data.method;
 
   if (!(method in api.methods)) {
-    return sendError(messageId, method + ' not implemented by worker');
+    return sendError(messageId, new Error(method + ' not implemented by worker'));
   }
 
   //console.log('Call worker method', method);
@@ -73,10 +73,10 @@ function handleRPC(data) {
       sendResponse(messageId, value);
     })
     .catch(function(error) {
-      sendError(messageId, error.message);
+      sendError(messageId, error);
     });
   } catch (error) {
-    sendError(messageId, error.message);
+    sendError(messageId, error);
   }
 }
 
@@ -87,7 +87,7 @@ function handleSubscription(data) {
 
   //console.log('Process subscription to', eventType);
   if (!Array.isArray(api.events) || api.events.indexOf(eventType) === -1) {
-    return sendError(messageId, eventType + ' not registered by worker');
+    return sendError(messageId, new Error(eventType + ' not registered by worker'));
   }
 
   if (messageType === 'subscribe') {
@@ -110,15 +110,34 @@ function sendResponse(messageId, response) {
   self.postMessage(message);
 }
 
-function sendError(messageId, errorMessage) {
-  var message = {
+function toStringOrNull(str) {
+  if (typeof str === 'string' || str == null) {
+    return str;
+  }
+
+  try {
+    return str.toString();
+  } catch (error) {
+    return null;
+  }
+}
+
+function findString(candidates) {
+  return toStringOrNull(candidates.find(function(candidate) {
+    return toStringOrNull(candidate) != null;
+  }));
+}
+
+function sendError(messageId, error) {
+  self.postMessage({
     messageType: 'response',
     messageId: messageId,
-    errorMessage: errorMessage
-  };
-
-  //console.log('Send error to main thread', JSON.stringify(message));
-  self.postMessage(message);
+    error: {
+      name: findString([error.name, error.errorClass]),
+      message: findString([error.message, error.errorMessage]),
+      stack: findString([error.stack, error.stacktrace, error['opera#sourceloc']]),
+    },
+  });
 }
 
 // See https://promisesaplus.com/
@@ -261,7 +280,13 @@ function waitForResponse(worker, messageId) {
         worker.removeEventListener('message', onmessage);
       }
 
-      if (data.errorMessage) return reject(new Error(data.errorMessage));
+      if (data.error) {
+        var error = new Error(data.error.message);
+        error.name = data.error.name;
+        error.stack = data.error.stack;
+        return reject(error);
+      }
+
       accept(data.response);
     });
   });
