@@ -1,13 +1,13 @@
-JS := $(shell find lib/ -name "*.js")
+JS = $(shell find src/ -name "*.js")
+BUILD = $(patsubst src/%.js, build/%.js, $(JS))
 
-proxyworker.js: $(JS) node_modules
-	./node_modules/.bin/browserify \
-		--standalone proxyworker \
-		./lib/index.js > ./proxyworker.js
-
-node_modules: package.json
-	npm install
+proxyworker.js: $(BUILD)
+	./node_modules/.bin/browserify --standalone proxyworker ./build/index.js > $@
 
 .PHONY: clean
 clean:
 	rm -rf build proxyworker.js
+
+build/%.js: src/%.js
+	@mkdir -p "$(@D)"
+	./node_modules/.bin/babel $< -o $@

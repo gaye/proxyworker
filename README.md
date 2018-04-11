@@ -1,15 +1,15 @@
 proxyworker
 ===========
 
-Lightweight utility to proxy api requests from main thread to web worker. Assumes platform support for a number of es6 features like arrow functions, generators, promises, and template strings (currently only works in Firefox). Check out the test suite [here](http://gaye.github.io/proxyworker/test/).
+Lightweight utility to proxy api requests from main thread to web worker.
 
 ### Usage
 
 ```js
-define(function(require, exports) {
-'use strict';
-let ProxyWorker = require('proxyworker').ProxyWorker;
-let worker = new ProxyWorker(new Worker('./path/to/echo_worker.js'));
+// Main thread
+const {ProxyWorker} = require('proxyworker');
+
+const worker = new ProxyWorker(new Worker('./path/to/worker.js'));
 
 // Call 'echo' method on worker with some arguments.
 // This returns a promise that will resolve with the worker api response.
@@ -19,14 +19,11 @@ worker.callWithArgs('echo', ['a', 'b', 'c', 1, 2, 3]);
 worker.subscribe('breakfast', breakfast => {
   // breakfast => ['green', 'eggs', 'and', 'tofu']
 });
+```
 
-});
-
-// echo_worker.js
-define(function(require) {
-'use strict';
-let emit = require('proxyworker').emit;
-let proxy = require('proxyworker').proxy;
+```js
+// worker.js
+const {emit, proxy} = require('proxyworker');
 
 proxy({
   methods: {
@@ -37,7 +34,7 @@ proxy({
   },
 
   events: [
-    'breakfast'
+    'breakfast',
   ]
 });
 
@@ -47,9 +44,7 @@ setInterval(function() {
     'green',
     'eggs',
     'and',
-    'tofu'
+    'tofu',
   ]);
 }, 24 * 60 * 60 * 1000);
-
-});
 ```

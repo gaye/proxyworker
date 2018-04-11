@@ -1,4 +1,5 @@
 *.log
+proxyworker.js
 
 /build
 /node_modules
