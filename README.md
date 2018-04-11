@@ -4,6 +4,7 @@ proxyworker
 [![CircleCI](https://circleci.com/gh/scidock/proxyworker.svg?style=svg)](https://circleci.com/gh/scidock/proxyworker)
 
 Lightweight utility to proxy api requests from main thread to web worker.
+Run the tests in your browser [here](https://scidock.github.io/proxyworker/test)!
 
 ### Usage
 
