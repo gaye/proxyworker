@@ -1,5 +1,3 @@
 *.log
 
 /build
-/node_modules
-/proxyworker.js
