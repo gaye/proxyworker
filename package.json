@@ -1,11 +1,11 @@
 {
   "name": "proxyworker",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "author": "Gareth (Ari) Aye <ari@scidock.com>",
   "description": "Simple wrapper for proxying api requests from mt to worker",
   "license": "MPL-2.0",
-  "main": "proxyworker.js",
-  "files": ["proxyworker.js"],
+  "main": "build/index.js",
+  "files": ["proxyworker.js", "build/*"],
   "scripts": {
     "prepublish": "make",
     "test": "flow"
